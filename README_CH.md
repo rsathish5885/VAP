@@ -1,15 +1,12 @@
-[中文文档](./README_CH.md)
-
-### Backdrop
-Transparent video animation is currently one of the more popular implementations of animation. Major manufacturers have also open sourced their own frameworks. In the end, we chose [Tencent vap](https://github.com/Tencent/vap), which supports Android, IOS, and Web, and provides natural convenience for us to encapsulate flutter_vap. Provides a tool to generate a video with an alpha channel from a frame picture, which is simply awesome.
+### 背景
+透明视频动画是目前比较流行的实现动画的一种, 大厂也相继开源自己的框架，最终我们选中[腾讯vap](https://github.com/Tencent/vap)，它支持了Android、IOS、Web，为我们封装flutter_vap提供了天然的便利，并且它提供了将帧图片生成带alpha通道视频的工具，这简直太赞了。
 
 
+VAP（Video Animation Player）是企鹅电竞开发，用于播放酷炫动画的实现方案。
+- 相比Webp, Apng动图方案，具有高压缩率(素材更小)、硬件解码(解码更快)的优点
+- 相比Lottie，能实现更复杂的动画效果(比如粒子特效)
 
-VAP（Video Animation Player）is developed by Penguin E-sports and is used to play cool animations.
-- Compared with Webp and Apng animation solutions, it has the advantages of high compression rate (smaller material) and hardware decoding (faster decoding)
-- Compared with Lottie, it can achieve more complex animation effects (such as particle effects)
-
-### Preview
+### 预览
 ![image](http://file.jinxianyun.com/flutter_vap.gif)
 
 [video for youtube](https://youtu.be/OCLkFhcYqwA)
@@ -18,19 +15,19 @@ VAP（Video Animation Player）is developed by Penguin E-sports and is used to p
 
 [apk download](http://file.jinxianyun.com/flutter_vap.apk)
 
-### Setup
+### 安装
 ```
 flutter_vap2: ${last_version}
 ```
 
-### How to use
+### 使用
 ```dart
 import 'package:flutter_vap2/flutter_vap.dart';
 
 VapViewController vapViewController;
 
 IgnorePointer(
-  // VapView can set the width and height through the outer package Container() to limit the width and height of the pop-up video
+  // VapView可以通过外层包Container(),设置宽高来限制弹出视频的宽高
   child: VapView(
     onVapViewCreated: (controller) {
         vapViewController = controller;
@@ -39,7 +36,7 @@ IgnorePointer(
 ),
 ```
 
-1. Play local video
+1. 播放本地视频
 ```dart
   import 'package:flutter_vap2/flutter_vap.dart';
 
@@ -57,7 +54,7 @@ IgnorePointer(
   }
 ```
 
-2. Play asset video
+2. 播放asset视频
 ```dart
   Future<Map<dynamic, dynamic>> _playAsset(String asset) async {
     if (asset == null) {
@@ -71,27 +68,24 @@ IgnorePointer(
   }
 ```
 
-3. Stop play
+3. 停止播放
 ```dart
   VapController.stop()
 ```
 
-4. Queue play
+4. 队列播放
 ```dart
-  _queuePlay() async {。
-    // Simultaneously call playback in multiple places, making the queue perform playback.
+  _queuePlay() async {
+    // 模拟多个地方同时调用播放,使得队列执行播放。
     QueueUtil.get("vapQueue").addTask(() => vapViewController.playPath(downloadPathList[0]));
     QueueUtil.get("vapQueue").addTask(() => vapViewController.playPath(downloadPathList[1]));
   }
 ```
 
-5. Cancel queue playback
+5. 取消队列播放
 ```dart
   QueueUtil.get("vapQueue").cancelTask();
 ```
 
-Example
-
+### 例子
 [github](https://gitee.com/fine1021/flutter_vap/blob/main/example/lib/main.dart)
-
-
