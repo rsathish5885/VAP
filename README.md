@@ -3,6 +3,7 @@
 ### Backdrop
 Transparent video animation is currently one of the more popular implementations of animation. Major manufacturers have also open sourced their own frameworks. In the end, we chose [Tencent vap](https://github.com/Tencent/vap), which supports Android, IOS, and Web, and provides natural convenience for us to encapsulate flutter_vap. Provides a tool to generate a video with an alpha channel from a frame picture, which is simply awesome.
 
+This project We fixed Transprant (alpha channel Issues to some android Mobiles Like OPPO, RealMe Phones)
 
 
 VAP（Video Animation Player）is developed by Penguin E-sports and is used to play cool animations.
