@@ -33,6 +33,7 @@ internal class NativeVapView(
         var scaleType = ScaleType.FIT_CENTER
         var fps: Int? = null
         var playLoop: Int? = null
+        var error = false
         creationParams?.let { params ->
             if (params.containsKey("scaleType")) {
                 val index = (params["scaleType"] as? Int) ?: 1
@@ -50,6 +51,7 @@ internal class NativeVapView(
         playLoop?.let { vapView.setLoop(it) }
         vapView.setAnimListener(object : IAnimListener {
             override fun onFailed(errorType: Int, errorMsg: String?) {
+                error=true;
                 GlobalScope.launch(Dispatchers.Main) {
                     methodResult?.success(HashMap<String, String>().apply {
                         put("status", "failure")
@@ -60,11 +62,14 @@ internal class NativeVapView(
             }
 
             override fun onVideoComplete() {
-                GlobalScope.launch(Dispatchers.Main) {
-                    methodResult?.success(HashMap<String, String>().apply {
-                        put("status", "complete")
-                    })
+                if (!error){
+                    GlobalScope.launch(Dispatchers.Main) {
+                        methodResult?.success(HashMap<String, String>().apply {
+                            put("status", "complete")
+                        })
+                    }
                 }
+
             }
 
             override fun onVideoDestroy() {
