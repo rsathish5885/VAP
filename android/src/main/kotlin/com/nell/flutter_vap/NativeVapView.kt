@@ -69,6 +69,8 @@ internal class NativeVapView(
                         })
                     }
                 }
+                error=false;
+                
 
             }
 
