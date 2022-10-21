@@ -1,6 +1,7 @@
 package com.nell.flutter_vap
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.tencent.qgame.animplayer.AnimConfig
 import com.tencent.qgame.animplayer.AnimView
@@ -21,7 +22,7 @@ internal class NativeVapView(
     private val flutterAssets: FlutterPlugin.FlutterAssets,
     binaryMessenger: BinaryMessenger,
     private val context: Context,
-    id: Int,
+    private val id: Int,
     creationParams: Map<*, *>?
 ) : MethodChannel.MethodCallHandler, PlatformView {
 
@@ -51,6 +52,8 @@ internal class NativeVapView(
         playLoop?.let { vapView.setLoop(it) }
         vapView.setAnimListener(object : IAnimListener {
             override fun onFailed(errorType: Int, errorMsg: String?) {
+                Log.d("Vap View - $id", "Failed")
+
                 error=true;
                 GlobalScope.launch(Dispatchers.Main) {
                     methodResult?.success(HashMap<String, String>().apply {
@@ -62,6 +65,8 @@ internal class NativeVapView(
             }
 
             override fun onVideoComplete() {
+                Log.d("Vap View - $id", "Video Complete")
+
                 if (!error){
                     GlobalScope.launch(Dispatchers.Main) {
                         methodResult?.success(HashMap<String, String>().apply {
@@ -69,19 +74,23 @@ internal class NativeVapView(
                         })
                     }
                 }
-                error=false;
+//                error=false;
                 
 
             }
 
             override fun onVideoDestroy() {
+                Log.d("Vap View - $id", "Video Destroy")
 
             }
 
             override fun onVideoRender(frameIndex: Int, config: AnimConfig?) {
+
             }
 
             override fun onVideoStart() {
+                Log.d("Vap View - $id", "Video Start")
+
             }
 
         })
@@ -94,6 +103,7 @@ internal class NativeVapView(
     }
 
     override fun dispose() {
+        Log.d("Vap View - $id", "Disposed")
         channel.setMethodCallHandler(null)
 
     }
