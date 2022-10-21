@@ -13,8 +13,8 @@ class NativeVapViewFactory(
 ) :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
-    override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+    override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
         val creationParams = args as? Map<*, *>
-        return NativeVapView(flutterAssets, binaryMessenger, context, viewId, creationParams)
+        return NativeVapView(flutterAssets, binaryMessenger, context!!, viewId, creationParams)
     }
 }
